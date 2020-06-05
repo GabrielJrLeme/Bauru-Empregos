@@ -38,9 +38,13 @@ namespace BauruEmpregosBack
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
