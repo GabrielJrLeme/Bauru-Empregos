@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BauruEmpregosBack.Models;
 using BauruEmpregosBack.Services;
@@ -20,15 +18,96 @@ namespace BauruEmpregosBack.Controllers
         {
             _services = services;
         }
-
+        
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> GetAllVacancyAsync()
+        {
+            List<Vagas> vagas = await _services.SearchAllVacancyAsync();
+
+            if(vagas.Equals(null))
+                return Ok("Não á vagas registradas");
+
+            return Ok(vagas);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOneVacancyAsync(string id)
         {
 
-            List<Vagas> list = _services.ListAllVagas();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest("Id Nulo");
+            }
 
-            return Ok(list);
+            Vagas vaga = await _services.SearchOneVacancyAsync(id);
+
+            if (vaga.Equals(null))
+                return Ok("Vaga inesistente");
+
+            return Ok(vaga);
         }
+
+
+        [HttpPost]
+        public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vagas vaga)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Modelo Invalido");
+            }
+
+            await _services.NewVacancyAsync(vaga);
+
+            return Ok(vaga);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutVacancyAsync(string id,[FromBody]Vagas editions)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest("Id Nulo");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Modelo Invalido");
+            }
+
+            Vagas vaga = await _services.SearchOneVacancyAsync(id);
+
+            if (vaga.Equals(null))
+            {
+                return NotFound("Vaga inesistente");
+            }
+
+            await _services.ChangeOneVacancyAsync(vaga, editions);
+
+            return Ok("Ok");
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteVacancyAsync(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest("Id Nulo");
+            }
+
+            Vagas vaga = await _services.SearchOneVacancyAsync(id);
+
+            if (vaga.Equals(null))
+            {
+                return NotFound("Vaga inesistente");
+            }
+
+            await _services.DeleteOneVacancyAsync(vaga);
+
+            return Ok("Ok");
+        }
+
     }
 }

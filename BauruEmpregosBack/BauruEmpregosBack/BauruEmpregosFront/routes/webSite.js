@@ -9,7 +9,8 @@ router.get('/',async (req,res) => {
     }).catch((err) => {
         console.group("Error === "+err);
     })
-    res.render('webSite/index.handlebars');
+
+    res.render('webSite/index.handlebars',{response:this.response});
 });
 
 module.exports = router;

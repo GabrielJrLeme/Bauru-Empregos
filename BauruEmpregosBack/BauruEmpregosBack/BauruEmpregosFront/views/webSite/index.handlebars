@@ -1,1 +1,19 @@
-aeeeeee
+<div class="container">
+    <table class="table mt-5 mb-5 table-hover">
+        <caption>List of users</caption>
+        <thead>
+            <tr>
+                <th scope="col" colspan="4">Vagas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each response}}
+            <tr>
+                <td class="text-left" scope="row" colspan="2">{{response.title}}</td>
+                <td class="text-right" scope="row" colspan="2">{{response.postDate}} | Bauru - SP</td>
+            </tr>
+            {{else}}                       
+            {{/each}}
+        </tbody>
+    </table>
+</div>

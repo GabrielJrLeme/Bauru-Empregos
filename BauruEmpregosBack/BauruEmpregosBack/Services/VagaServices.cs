@@ -1,7 +1,7 @@
-﻿using BauruEmpregosBack.Models;
-using System;
+﻿using BauruEmpregosBack.Data;
+using BauruEmpregosBack.Models;
+using MongoDB.Driver;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BauruEmpregosBack.Services
@@ -9,21 +9,61 @@ namespace BauruEmpregosBack.Services
     public class VagaServices
     {
 
-        private List<Vagas> _ListVagas;
+        private readonly IMongoCollection<Vagas> _collection;
 
-        public List<Vagas> ListAllVagas()
+
+        public VagaServices(IStoreDatabaseSettings settings)
         {
-            _ListVagas = new List<Vagas>()
-            {
-                new Vagas(){Activy = true, Empresa = "Empresa1", Mensagem = "vaga1", Id = "1"},
-                new Vagas(){Activy = true, Empresa = "Empresa2", Mensagem = "vaga2", Id = "2"},
-                new Vagas(){Activy = true, Empresa = "Empresa3", Mensagem = "vaga3", Id = "3"},
-                new Vagas(){Activy = true, Empresa = "Empresa4", Mensagem = "vaga4", Id = "4"}
-            };
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
 
-            return _ListVagas;
-    }
+            _collection = database.GetCollection<Vagas>(settings.VacancyCollectionName);
+        }
 
 
+
+
+        public async Task<List<Vagas>> SearchAllVacancyAsync()
+            => await _collection.Find(x => x.Activy.Equals(true)).ToListAsync();
+
+
+        public async Task<Vagas> SearchOneVacancyAsync(string idResp)
+            => await _collection.Find(x => x.Id.Equals(idResp) && x.Activy.Equals(true)).FirstOrDefaultAsync();
+
+        public async Task NewVacancyAsync(Vagas vaga)
+        {
+
+            //vaga.Slug = slug + 1;
+
+            await _collection.InsertOneAsync(vaga);
+        }
+
+
+        public async Task ChangeOneVacancyAsync(Vagas vaga,Vagas editions)
+        {
+
+            vaga.Company = editions.Company;
+            vaga.Email = editions.Email;
+            vaga.Phone = editions.Phone;
+            vaga.Title = editions.Title;
+            vaga.Status = editions.Status;
+            vaga.City = editions.City;
+            vaga.InformationVacancy = editions.InformationVacancy;
+
+            await _collection.ReplaceOneAsync(x => x.Id.Equals(vaga.Id), vaga);
+        }
+
+        public async Task DeleteOneVacancyAsync(Vagas vaga)
+        {
+
+            vaga.Activy = false;
+
+            await _collection.ReplaceOneAsync(x => x.Id.Equals(vaga.Id), vaga);
+        }
+
+        /*
+        private async Task<long> CountVacancyAsync()
+            => await _collection.Find(x => x.Activy.Equals(true) || x.Activy.Equals(false)).CountDocumentsAsync();
+            */
     }
 }

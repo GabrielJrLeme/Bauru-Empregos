@@ -1,20 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace BauruEmpregosBack.Models
 {
     public class Vagas
     {
-
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public string Empresa { get; set; }
+        public string Company { get; set; }
 
-        public string Mensagem { get; set; }
+        public string Title { get; set; }
 
-        public bool Activy { get; set; }
+        public long Slug { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public string InformationVacancy { get; set; }
+
+        public string City { get; set; }
+
+        public bool Activy { get; set; } = true;
+
+        public bool Status { get; set; } = true;
+
+        public DateTime PostDate { get; set; } = DateTime.Now;
 
     }
 }
