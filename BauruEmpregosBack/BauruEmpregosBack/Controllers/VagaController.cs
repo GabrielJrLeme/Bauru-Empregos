@@ -23,12 +23,7 @@ namespace BauruEmpregosBack.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllVacancyAsync()
         {
-            List<Vagas> vagas = await _services.SearchAllVacancyAsync();
-
-            if(vagas.Equals(null))
-                return Ok("Não á vagas registradas");
-
-            return Ok(vagas);
+            return Ok(await _services.SearchAllVacancyAsync());
         }
 
         [HttpGet("{id}")]
@@ -60,7 +55,7 @@ namespace BauruEmpregosBack.Controllers
 
             await _services.NewVacancyAsync(vaga);
 
-            return Ok(vaga);
+            return Ok("Ok");
         }
 
         [HttpPut("{id}")]

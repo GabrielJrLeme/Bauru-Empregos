@@ -33,7 +33,9 @@ namespace BauruEmpregosBack.Services
         public async Task NewVacancyAsync(Vagas vaga)
         {
 
-            //vaga.Slug = slug + 1;
+            long slug = await CountVacancyAsync();
+
+            vaga.Slug = slug + 1;
 
             await _collection.InsertOneAsync(vaga);
         }
@@ -61,9 +63,9 @@ namespace BauruEmpregosBack.Services
             await _collection.ReplaceOneAsync(x => x.Id.Equals(vaga.Id), vaga);
         }
 
-        /*
+        
         private async Task<long> CountVacancyAsync()
             => await _collection.Find(x => x.Activy.Equals(true) || x.Activy.Equals(false)).CountDocumentsAsync();
-            */
+            
     }
 }
