@@ -15,7 +15,7 @@ namespace BauruEmpregosBack.Models
 
         public string Title { get; set; }
 
-        public long Slug { get; set; }
+        public int Slug { get; set; }
 
         public string Email { get; set; }
 

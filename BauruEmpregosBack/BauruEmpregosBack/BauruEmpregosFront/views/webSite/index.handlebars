@@ -1,3 +1,10 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+  </div>
+</div>  
+
 <div class="container">
     <table class="table mt-5 mb-5 table-hover">
         <caption>List of users</caption>
@@ -11,21 +18,21 @@
 
                 {{#if status}}
                     <tr>
-                        <td class="text-left" scope="row" colspan="2"><a href="/posts/{{slug}}" target="_blank">{{title}}</a>
+                        <td class="text-left" scope="row" colspan="2"><a href="/vagas/{{slug}}" target="_blank">{{title}}</a>
                         </td>
-                        <td class="text-right" scope="row" colspan="2">{{postDate}} | {{city}} - SP</td>
+                        <td class="text-right" scope="row" colspan="2">{{city}} - SP</td>
                     </tr>
                 {{else}} 
                     <tr>
                         <td class="text-left" scope="row" colspan="1">
-                            <a href="/posts/{{slug}}" target="_blank">{{title}}</a>
+                            <a href="/vagas/{{slug}}" target="_blank">{{title}}</a>
                         </td>
                         <td class="text-left" scope="row" colspan="1">
                             <p class="text-info">
                                 [ Vaga Encerrada! ]
                             </p>
                         </td>
-                        <td class="text-right" scope="row" colspan="2">{{postDate}} | {{city}} - SP</td>
+                        <td class="text-right" scope="row" colspan="2">{{city}} - SP</td>
                     </tr>   
                 {{/if}}
 

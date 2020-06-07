@@ -22,9 +22,7 @@ namespace BauruEmpregosBack.Controllers
         
         [HttpGet]
         public async Task<IActionResult> GetAllVacancyAsync()
-        {
-            return Ok(await _services.SearchAllVacancyAsync());
-        }
+            => Ok(await _services.SearchAllVacancyAsync());
 
 
         [HttpGet("{slug}")]
