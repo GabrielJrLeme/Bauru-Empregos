@@ -7,12 +7,31 @@
             </tr>
         </thead>
         <tbody>
-            {{#each response}}
-            <tr>
-                <td class="text-left" scope="row" colspan="2">{{response.title}}</td>
-                <td class="text-right" scope="row" colspan="2">{{response.postDate}} | Bauru - SP</td>
-            </tr>
-            {{else}}                       
+            {{#each response.data}}
+
+                {{#if status}}
+                    <tr>
+                        <td class="text-left" scope="row" colspan="2"><a href="/posts/{{slug}}" target="_blank">{{title}}</a>
+                        </td>
+                        <td class="text-right" scope="row" colspan="2">{{postDate}} | {{city}} - SP</td>
+                    </tr>
+                {{else}} 
+                    <tr>
+                        <td class="text-left" scope="row" colspan="1">
+                            <a href="/posts/{{slug}}" target="_blank">{{title}}</a>
+                        </td>
+                        <td class="text-left" scope="row" colspan="1">
+                            <p class="text-info">
+                                [ Vaga Encerrada! ]
+                            </p>
+                        </td>
+                        <td class="text-right" scope="row" colspan="2">{{postDate}} | {{city}} - SP</td>
+                    </tr>   
+                {{/if}}
+
+
+            {{else}}
+
             {{/each}}
         </tbody>
     </table>

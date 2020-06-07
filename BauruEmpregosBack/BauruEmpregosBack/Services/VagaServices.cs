@@ -1,6 +1,7 @@
 ﻿using BauruEmpregosBack.Data;
 using BauruEmpregosBack.Models;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,13 +28,17 @@ namespace BauruEmpregosBack.Services
             => await _collection.Find(x => x.Activy.Equals(true)).ToListAsync();
 
 
-        public async Task<Vagas> SearchOneVacancyAsync(string idResp)
+        public async Task<Vagas> SearchOneVacancySlugAsync(int slug)
+            => await _collection.Find(x => x.Slug.Equals(slug) && x.Activy.Equals(true)).FirstOrDefaultAsync();
+
+
+        public async Task<Vagas> SearchOneVacancyIdAsync(string idResp)
             => await _collection.Find(x => x.Id.Equals(idResp) && x.Activy.Equals(true)).FirstOrDefaultAsync();
 
         public async Task NewVacancyAsync(Vagas vaga)
         {
 
-            long slug = await CountVacancyAsync();
+            int slug = await CountVacancyAsync();
 
             vaga.Slug = slug + 1;
 
@@ -64,8 +69,8 @@ namespace BauruEmpregosBack.Services
         }
 
         
-        private async Task<long> CountVacancyAsync()
-            => await _collection.Find(x => x.Activy.Equals(true) || x.Activy.Equals(false)).CountDocumentsAsync();
-            
+        private async Task<int> CountVacancyAsync()
+            => await _collection.AsQueryable().CountAsync();
+
     }
 }
