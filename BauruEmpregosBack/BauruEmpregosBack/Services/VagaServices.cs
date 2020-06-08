@@ -26,7 +26,7 @@ namespace BauruEmpregosBack.Services
 
         public async Task<List<Vagas>> SearchAllVacancyAsync()
             => await _collection.AsQueryable().Where(x => x.Activy.Equals(true))
-                                .OrderBy(x => x.PostDate)
+                                .OrderByDescending(x => x.PostDate)
                                 .ToListAsync();
 
         public async Task<Vagas> SearchOneVacancySlugAsync(int slug)
@@ -70,8 +70,8 @@ namespace BauruEmpregosBack.Services
 
         public async Task DeleteOneVacancyAsync(Vagas vaga)
         {
-
-            vaga.Activy = false;
+            if(vaga.Activy)
+                vaga.Activy = false;
 
             await _collection.ReplaceOneAsync(x => x.Id.Equals(vaga.Id), vaga);
         }

@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const webSite = require('./routes/webSite');
+const Admin = require('./routes/Admin');
 const path = require('path');
 const app = express();
 
@@ -24,6 +25,7 @@ const app = express();
 
 //rotas
     app.use('/',webSite);
+    app.use('/admin',Admin);
 
 //porta
     const port = 8080;
