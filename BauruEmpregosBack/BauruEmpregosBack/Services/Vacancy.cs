@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace BauruEmpregosBack.Services
 {
-    public class VagaServices
+    public class Vacancy
     {
 
         private readonly IMongoCollection<Vacancys> _collection;
 
 
-        public VagaServices(IStoreDatabaseSettings settings)
+        public Vacancy(IStoreDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);

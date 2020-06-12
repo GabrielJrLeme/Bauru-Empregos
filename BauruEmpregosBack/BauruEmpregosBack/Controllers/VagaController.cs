@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BauruEmpregosBack.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class VagaController : ControllerBase
     {
 
 
-        private readonly VagaServices _services;
+        private readonly Vacancy _services;
 
-        public VagaController(VagaServices services)
+        public VagaController(Vacancy services)
         {
             _services = services;
         }
