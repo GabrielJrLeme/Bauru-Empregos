@@ -34,7 +34,7 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Slug Nulo");
             }
 
-            Vagas vaga = await _services.SearchOneVacancySlugAsync(slug);
+            Vacancys vaga = await _services.SearchOneVacancySlugAsync(slug);
 
             if (vaga.Equals(null))
                 return Ok("Vaga inesistente");
@@ -44,7 +44,7 @@ namespace BauruEmpregosBack.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vagas vaga)
+        public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vacancys vaga)
         {
 
             if (!ModelState.IsValid)
@@ -58,7 +58,7 @@ namespace BauruEmpregosBack.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutVacancyAsync(string id,[FromBody]Vagas editions)
+        public async Task<ActionResult> PutVacancyAsync(string id,[FromBody]Vacancys editions)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
@@ -70,7 +70,7 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Modelo Invalido");
             }
 
-            Vagas vaga = await _services.SearchOneVacancyIdAsync(id);
+            Vacancys vaga = await _services.SearchOneVacancyIdAsync(id);
 
             if (vaga.Equals(null))
             {
@@ -91,7 +91,7 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Id Nulo");
             }
 
-            Vagas vaga = await _services.SearchOneVacancyIdAsync(id);
+            Vacancys vaga = await _services.SearchOneVacancyIdAsync(id);
 
             if (vaga.Equals(null))
             {

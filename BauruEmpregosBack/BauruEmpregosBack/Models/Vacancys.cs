@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BauruEmpregosBack.Models
 {
-    public class Vagas
+    public class Vacancys
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

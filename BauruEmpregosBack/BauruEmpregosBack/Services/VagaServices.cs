@@ -10,7 +10,7 @@ namespace BauruEmpregosBack.Services
     public class VagaServices
     {
 
-        private readonly IMongoCollection<Vagas> _collection;
+        private readonly IMongoCollection<Vacancys> _collection;
 
 
         public VagaServices(IStoreDatabaseSettings settings)
@@ -18,20 +18,20 @@ namespace BauruEmpregosBack.Services
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _collection = database.GetCollection<Vagas>(settings.VacancyCollectionName);
+            _collection = database.GetCollection<Vacancys>(settings.CollectionName);
         }
 
 
 
 
-        public async Task<List<Vagas>> SearchAllVacancyAsync()
+        public async Task<List<Vacancys>> SearchAllVacancyAsync()
             => await _collection.AsQueryable().Where(x => x.Activy.Equals(true))
                                 .OrderByDescending(x => x.PostDate)
                                 .ToListAsync();
 
-        public async Task<Vagas> SearchOneVacancySlugAsync(int slug)
+        public async Task<Vacancys> SearchOneVacancySlugAsync(int slug)
         {
-            Vagas vaga = await _collection.AsQueryable()
+            Vacancys vaga = await _collection.AsQueryable()
                             .Where(x => x.Slug.Equals(slug))
                             .FirstOrDefaultAsync();
 
@@ -40,10 +40,10 @@ namespace BauruEmpregosBack.Services
             
 
 
-        public async Task<Vagas> SearchOneVacancyIdAsync(string idResp)
+        public async Task<Vacancys> SearchOneVacancyIdAsync(string idResp)
             => await _collection.AsQueryable().Where(x => x.Id.Equals(idResp) && x.Activy.Equals(true)).FirstOrDefaultAsync();
 
-        public async Task NewVacancyAsync(Vagas vaga)
+        public async Task NewVacancyAsync(Vacancys vaga)
         {
 
             int slug = await CountVacancyAsync();
@@ -54,7 +54,7 @@ namespace BauruEmpregosBack.Services
         }
 
 
-        public async Task ChangeOneVacancyAsync(Vagas vaga,Vagas editions)
+        public async Task ChangeOneVacancyAsync(Vacancys vaga,Vacancys editions)
         {
 
             vaga.Company = editions.Company;
@@ -68,7 +68,7 @@ namespace BauruEmpregosBack.Services
             await _collection.ReplaceOneAsync(x => x.Id.Equals(vaga.Id), vaga);
         }
 
-        public async Task DeleteOneVacancyAsync(Vagas vaga)
+        public async Task DeleteOneVacancyAsync(Vacancys vaga)
         {
             if(vaga.Activy)
                 vaga.Activy = false;
