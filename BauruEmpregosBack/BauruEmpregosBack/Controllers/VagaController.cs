@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BauruEmpregosBack.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class VagaController : ControllerBase
@@ -19,7 +20,7 @@ namespace BauruEmpregosBack.Controllers
             _services = services;
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllVacancyAsync()
             => Ok(await _services.SearchAllVacancyAsync());
