@@ -6,25 +6,25 @@ using System.Linq;
 
 namespace BauruEmpregosBack.Models
 {
-    public class Solicitations
+    public class Solicitation
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public List<Vacancys> Vacancys { get; set; } = new List<Vacancys>();
+        public List<Vacancy> Vacancys { get; set; } = new List<Vacancy>();
 
         public DateTime DatePublication { get; set; } = DateTime.Now;
 
         public bool Activy { get; set; } = true;
 
 
-        public void AddVacancy(Vacancys vacancys)
+        public void AddVacancy(Vacancy vacancys)
         {
             Vacancys.Add(vacancys);
         }
 
-        public void RemoveVacancy(Vacancys vacancys)
+        public void RemoveVacancy(Vacancy vacancys)
         {
             Vacancys.Remove(vacancys);
         }

@@ -5,14 +5,13 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BauruEmpregosBack.Services
 {
     public static  class TokenService
     {
 
-        public static string GenerationToken(Users user)
+        public static string GenerationToken(UserLogin user)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -22,9 +21,12 @@ namespace BauruEmpregosBack.Services
                 Subject = new ClaimsIdentity(new Claim[] 
                 { 
                     new Claim(ClaimTypes.Email,user.Email.ToString()),
-                    new Claim(ClaimTypes.DateOfBirth,user.DateLeftLogin.ToString())
+                    new Claim(ClaimTypes.Role,user.Role.ToString()),
+                    new Claim(ClaimTypes.UserData,user.DateLeftLogin.ToString())
                 }), 
+
                 Expires = DateTime.UtcNow.AddHours(2),
+
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
 
             };
