@@ -1,31 +1,44 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BauruEmpregosBack.Models;
 using BauruEmpregosBack.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BauruEmpregosBack.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-    public class VagaController : ControllerBase
+    public class VacancyController : ControllerBase
     {
 
+        private readonly VacancyService _services;
 
-        private readonly VagaServices _services;
-
-        public VagaController(VagaServices services)
+        public VacancyController(VacancyService services)
         {
             _services = services;
         }
 
+        
+        [HttpGet]
+        [AutoValidateAntiforgeryToken]
+        [Route("allVacancys")]
+        public IActionResult AllVacancyAsync()
+            => Ok();
 
+
+        /// <summary>
+        /// Pegar todas as oportunidades ativas no sistema
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAllVacancyAsync()
             => Ok(await _services.SearchAllVacancyAsync());
 
 
+        /// <summary>
+        /// Pegar uma oportunidade especifica ativa no sistema
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
         [HttpGet("{slug}")]
         public async Task<IActionResult> GetOneVacancyAsync(int slug)
         {           
@@ -35,7 +48,7 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Slug Nulo");
             }
 
-            Vagas vaga = await _services.SearchOneVacancySlugAsync(slug);
+            Vacancy vaga = await _services.SearchOneVacancySlugAsync(slug);
 
             if (vaga.Equals(null))
                 return Ok("Vaga inesistente");
@@ -44,8 +57,13 @@ namespace BauruEmpregosBack.Controllers
         }
 
 
+        /// <summary>
+        /// Gerar uma nova oportunidade
+        /// </summary>
+        /// <param name="vaga"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vagas vaga)
+        public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vacancy model)
         {
 
             if (!ModelState.IsValid)
@@ -53,13 +71,21 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Modelo Invalido");
             }
 
-            await _services.NewVacancyAsync(vaga);
+            await _services.NewVacancyAsync(model);
 
-            return Ok("Ok");
+            return Created("Oportunidade gerada",model);
         }
 
+
+
+        /// <summary>
+        /// Edições de oportunidade
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="editions"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutVacancyAsync(string id,[FromBody]Vagas editions)
+        public async Task<ActionResult> PutVacancyAsync(string id,[FromBody]Vacancy editions)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
@@ -71,7 +97,7 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Modelo Invalido");
             }
 
-            Vagas vaga = await _services.SearchOneVacancyIdAsync(id);
+            Vacancy vaga = await _services.SearchOneVacancyIdAsync(id);
 
             if (vaga.Equals(null))
             {
@@ -84,6 +110,12 @@ namespace BauruEmpregosBack.Controllers
         }
 
 
+
+        /// <summary>
+        /// Oculta a oportunidade desejada
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteVacancyAsync(string id)
         {
@@ -92,7 +124,7 @@ namespace BauruEmpregosBack.Controllers
                 return BadRequest("Id Nulo");
             }
 
-            Vagas vaga = await _services.SearchOneVacancyIdAsync(id);
+            Vacancy vaga = await _services.SearchOneVacancyIdAsync(id);
 
             if (vaga.Equals(null))
             {
@@ -103,6 +135,7 @@ namespace BauruEmpregosBack.Controllers
 
             return Ok("Ok");
         }
+
 
     }
 }
