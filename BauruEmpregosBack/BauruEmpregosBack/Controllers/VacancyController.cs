@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BauruEmpregosBack.Models;
 using BauruEmpregosBack.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,24 +6,33 @@ using Microsoft.AspNetCore.Mvc;
 namespace BauruEmpregosBack.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class VagaController : ControllerBase
+    [Route("api/vacancy")]
+    public class VacancyController : ControllerBase
     {
 
+        private readonly VacancyService _services;
 
-        private readonly Vacancy _services;
-
-        public VagaController(Vacancy services)
+        public VacancyController(VacancyService services)
         {
             _services = services;
         }
 
-        
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAllVacancyAsync()
             => Ok(await _services.SearchAllVacancyAsync());
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
         [HttpGet("{slug}")]
         public async Task<IActionResult> GetOneVacancyAsync(int slug)
         {           
@@ -43,6 +51,11 @@ namespace BauruEmpregosBack.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vaga"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vacancys vaga)
         {
@@ -57,6 +70,14 @@ namespace BauruEmpregosBack.Controllers
             return Ok("Ok");
         }
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="editions"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> PutVacancyAsync(string id,[FromBody]Vacancys editions)
         {
@@ -83,6 +104,12 @@ namespace BauruEmpregosBack.Controllers
         }
 
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteVacancyAsync(string id)
         {
@@ -102,6 +129,7 @@ namespace BauruEmpregosBack.Controllers
 
             return Ok("Ok");
         }
+
 
     }
 }

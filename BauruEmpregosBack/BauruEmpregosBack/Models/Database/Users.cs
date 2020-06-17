@@ -2,7 +2,7 @@
 
 namespace BauruEmpregosBack.Models.Database
 {
-    public class User
+    public class Users
     {
 
         public string Id { get; set; }

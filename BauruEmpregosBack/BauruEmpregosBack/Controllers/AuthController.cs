@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BauruEmpregosBack.Models.Database;
+﻿using BauruEmpregosBack.Models.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace BauruEmpregosBack.Controllers
 {
@@ -14,10 +9,14 @@ namespace BauruEmpregosBack.Controllers
     public class AuthController : ControllerBase
     {
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Auth([FromBody]User model)
+        public IActionResult Auth([FromBody]Users model)
         {
             return Ok();
         }

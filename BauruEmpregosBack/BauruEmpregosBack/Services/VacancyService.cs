@@ -1,5 +1,7 @@
 ﻿using BauruEmpregosBack.Data;
 using BauruEmpregosBack.Models;
+using BauruEmpregosBack.Models.Database;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Collections.Generic;
@@ -7,28 +9,36 @@ using System.Threading.Tasks;
 
 namespace BauruEmpregosBack.Services
 {
-    public class Vacancy
+    public class VacancyService
     {
 
         private readonly IMongoCollection<Vacancys> _collection;
 
-
-        public Vacancy(IStoreDatabaseSettings settings)
+        public VacancyService(IStoreDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _collection = database.GetCollection<Vacancys>(settings.CollectionName);
+            _collection = database.GetCollection<Vacancys>(Collections.Vacancy);
         }
 
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Vacancys>> SearchAllVacancyAsync()
             => await _collection.AsQueryable().Where(x => x.Activy.Equals(true))
                                 .OrderByDescending(x => x.PostDate)
                                 .ToListAsync();
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
         public async Task<Vacancys> SearchOneVacancySlugAsync(int slug)
         {
             Vacancys vaga = await _collection.AsQueryable()
@@ -39,10 +49,22 @@ namespace BauruEmpregosBack.Services
         }
             
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idResp"></param>
+        /// <returns></returns>
         public async Task<Vacancys> SearchOneVacancyIdAsync(string idResp)
-            => await _collection.AsQueryable().Where(x => x.Id.Equals(idResp) && x.Activy.Equals(true)).FirstOrDefaultAsync();
+            => await _collection.AsQueryable()
+                                .Where(x => x.Id.Equals(idResp) && x.Activy.Equals(true))
+                                .FirstOrDefaultAsync();
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vaga"></param>
+        /// <returns></returns>
         public async Task NewVacancyAsync(Vacancys vaga)
         {
 
@@ -54,6 +76,12 @@ namespace BauruEmpregosBack.Services
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vaga"></param>
+        /// <param name="editions"></param>
+        /// <returns></returns>
         public async Task ChangeOneVacancyAsync(Vacancys vaga,Vacancys editions)
         {
 
@@ -68,6 +96,13 @@ namespace BauruEmpregosBack.Services
             await _collection.ReplaceOneAsync(x => x.Id.Equals(vaga.Id), vaga);
         }
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vaga"></param>
+        /// <returns></returns>
         public async Task DeleteOneVacancyAsync(Vacancys vaga)
         {
             if(vaga.Activy)
@@ -77,6 +112,11 @@ namespace BauruEmpregosBack.Services
         }
 
         
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private async Task<int> CountVacancyAsync()
             => await _collection.AsQueryable().CountAsync();
 
