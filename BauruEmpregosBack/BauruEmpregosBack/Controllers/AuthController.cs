@@ -1,6 +1,8 @@
 ﻿using BauruEmpregosBack.Models.Database;
+using BauruEmpregosBack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BauruEmpregosBack.Controllers
 {
@@ -13,6 +15,15 @@ namespace BauruEmpregosBack.Controllers
     public class AuthController : ControllerBase
     {
 
+        private readonly AuthService _service;
+
+        public AuthController(AuthService service)
+        {
+            _service = service;
+        }
+
+
+
         /// <summary>
         ///  Endpoint de login de usuario
         /// </summary>
@@ -20,9 +31,18 @@ namespace BauruEmpregosBack.Controllers
         /// <returns></returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult AuthLogin([FromBody]User model)
+        public async Task<IActionResult> AuthLoginAsync([FromBody]User model)
         {
-            return Ok();
+
+            if (!ModelState.IsValid)
+                return BadRequest("Dados invalidos");
+
+            User user = await _service.LoginUserAsync(model);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
 
 

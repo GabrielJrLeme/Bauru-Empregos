@@ -67,7 +67,9 @@ namespace BauruEmpregosBack
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
             services.AddSingleton<VacancyService>();
-            services.AddSingleton<UserService>();
+            services.AddSingleton<UserLoginService>();
+            services.AddSingleton<AuthService>();
+            services.AddSingleton<TokenService>();
         }
 
         

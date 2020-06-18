@@ -8,10 +8,10 @@ using System.Text;
 
 namespace BauruEmpregosBack.Services
 {
-    public static  class TokenService
+    public class TokenService
     {
 
-        public static string GenerationToken(UserLogin user)
+        public string GenerationToken(User user)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -21,7 +21,6 @@ namespace BauruEmpregosBack.Services
                 Subject = new ClaimsIdentity(new Claim[] 
                 { 
                     new Claim(ClaimTypes.Email,user.Email.ToString()),
-                    new Claim(ClaimTypes.Role,user.Role.ToString()),
                     new Claim(ClaimTypes.UserData,user.DateLeftLogin.ToString())
                 }), 
 

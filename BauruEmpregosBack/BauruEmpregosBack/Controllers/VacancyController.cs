@@ -69,7 +69,7 @@ namespace BauruEmpregosBack.Controllers
         /// <summary>
         /// Gerar uma nova oportunidade
         /// </summary>
-        /// <param name="vaga"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> PostNewVacancyAsync([FromBody] Vacancy model)
