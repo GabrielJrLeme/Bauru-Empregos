@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using BauruEmpregosBack.Models.Enum;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Text.Json.Serialization;
@@ -30,7 +31,7 @@ namespace BauruEmpregosBack.Models.Database
 
         [BsonElement("Role")]
         [BsonRepresentation(BsonType.String)]
-        public string Role { get; set; }
+        public Role Role { get; set; }
 
         [BsonElement("Activy")]
         [BsonRepresentation(BsonType.Boolean)]
