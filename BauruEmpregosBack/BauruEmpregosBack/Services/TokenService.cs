@@ -11,7 +11,7 @@ namespace BauruEmpregosBack.Services
     public static class TokenService
     {
 
-        public static string GenerationToken(UserLogin user)
+        public static string GenerationToken(User user)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();

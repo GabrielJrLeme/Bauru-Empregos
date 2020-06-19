@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BauruEmpregosBack.Models.Database;
 using BauruEmpregosBack.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BauruEmpregosBack.Controllers
@@ -22,24 +23,11 @@ namespace BauruEmpregosBack.Controllers
         }
 
 
-        /*
-        public async Task<IActionResult> PostCreateUserLoginAsync(UserLogin model)
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Dados incompletos");
-            }
-
-            // verificar se está logado
-
-
-            //if (!await _service.CreateUserAsync(model))
-                return NotFound("Houve um erro ao recarregar a página");
-
-            return Created("Usuario criado com sucesso",model);
-        }*/
-
+        [HttpGet]
+        [Route("all")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllUsersAsync()
+            => Ok(_service);
 
 
     }

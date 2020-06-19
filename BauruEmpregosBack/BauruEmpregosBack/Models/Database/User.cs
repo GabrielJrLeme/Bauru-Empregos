@@ -8,8 +8,9 @@ using System.Text.Json.Serialization;
 
 namespace BauruEmpregosBack.Models.Database
 {
-    public class UserLogin
+    public class User
     {
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -18,31 +19,32 @@ namespace BauruEmpregosBack.Models.Database
 
         [BsonElement("Name")]
         [BsonRepresentation(BsonType.String)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir um nome")]
         public string Name { get; set; }
 
 
 
         [BsonElement("Login")]
         [BsonRepresentation(BsonType.String)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir um login")]
         public string Login { get; set; }
 
 
 
         [BsonElement("Email")]
         [BsonRepresentation(BsonType.String)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir um email")]
         public string Email { get; set; }
 
 
+
         [JsonIgnore]
-        [Required]
+        [BsonRequired]
         [BsonElement("Password")]
         [BsonRepresentation(BsonType.String)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir uma senha")]
         public string Password { get; set; }
 
-
-        [BsonElement("Role")]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public virtual Role Role { get; set; }
 
 
         [BsonElement("Activy")]
@@ -50,9 +52,11 @@ namespace BauruEmpregosBack.Models.Database
         public bool Activy { get; set; } = true;
 
 
+
         [BsonElement("Token")]
         [BsonRepresentation(BsonType.String)]
         public string Token { get; set; } = null;
+
 
 
         [BsonElement("CreateDate")]
@@ -60,8 +64,29 @@ namespace BauruEmpregosBack.Models.Database
         public DateTime CreateDate { get; } = DateTime.Now;
 
 
+
         [BsonElement("DateLeftLogin")]
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime? DateLeftLogin { get; set; }
+
+
+
+        [BsonElement("Vacancies")]
+        [JsonIgnore]
+        public GroupVacancies GroupVacancies { get; set; }
+
+
+
+        [BsonElement("IdGroupVacancies")]
+        [BsonRepresentation(BsonType.String)]
+        public string IdGroupVacancies { get; set; }
+
+
+
+        [BsonElement("Role")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Role Role { get; set; }
+
+
     }
 }
