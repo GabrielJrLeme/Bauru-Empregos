@@ -34,14 +34,6 @@ namespace BauruEmpregosBack
                 sp.GetRequiredService<IOptions<StoreDatabaseSettings>>().Value);
 
 
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("user", policy => policy.RequireClaim("Store", "user"));
-                options.AddPolicy("admin", policy => policy.RequireClaim("Store", "admin"));
-            });
-
-
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
             services.AddAuthentication(x =>
@@ -66,8 +58,8 @@ namespace BauruEmpregosBack
             services.AddMvc();
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
-            services.AddSingleton<VacancyService>();
             services.AddSingleton<UserService>();
+            services.AddSingleton<AdminService>();
         }
 
         

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BauruEmpregosBack.Services
 {
-    public static  class TokenService
+    public static class TokenService
     {
 
         public static string GenerationToken(UserLogin user)

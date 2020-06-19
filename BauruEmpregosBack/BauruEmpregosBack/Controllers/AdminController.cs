@@ -10,20 +10,21 @@ namespace BauruEmpregosBack.Controllers
 {
 
     [ApiController]
-    [Route("api/client")]
-    public class UserController : ControllerBase
+    [Route("api/admin")]
+    public class AdminController : ControllerBase
     {
 
-        private readonly UserService _service;
+        private readonly AdminService _service;
 
-        public UserController(UserService service)
+        public AdminController(AdminService service)
         {
             _service = service;
         }
 
 
-        /*
-        public async Task<IActionResult> PostCreateUserLoginAsync(UserLogin model)
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> PostCreateUserLoginAsync(UserAdmin model)
         {
 
             if (!ModelState.IsValid)
@@ -34,12 +35,11 @@ namespace BauruEmpregosBack.Controllers
             // verificar se está logado
 
 
-            //if (!await _service.CreateUserAsync(model))
+            if (!await _service.CreateUserAsync(model))
                 return NotFound("Houve um erro ao recarregar a página");
 
-            return Created("Usuario criado com sucesso",model);
-        }*/
-
+            return Created("Usuario criado com sucesso", model);
+        }
 
 
     }
