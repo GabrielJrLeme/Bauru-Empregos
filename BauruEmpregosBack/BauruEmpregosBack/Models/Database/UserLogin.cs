@@ -2,6 +2,8 @@
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace BauruEmpregosBack.Models.Database
@@ -27,7 +29,11 @@ namespace BauruEmpregosBack.Models.Database
         [BsonRepresentation(BsonType.String)]
         public string Email { get; set; }
 
+<<<<<<<< HEAD:BauruEmpregosBack/BauruEmpregosBack/Models/Database/UserLogin.cs
 
+========
+        [JsonIgnore]
+>>>>>>>> ec93838cfc6a85fd5ba9bdc42388ef571a3abff2:BauruEmpregosBack/BauruEmpregosBack/Models/Database/User.cs
         [BsonElement("Password")]
         [BsonRepresentation(BsonType.String)]
         [JsonIgnore]
@@ -41,19 +47,29 @@ namespace BauruEmpregosBack.Models.Database
 
         [BsonElement("Role")]
         [BsonRepresentation(BsonType.String)]
+<<<<<<<< HEAD:BauruEmpregosBack/BauruEmpregosBack/Models/Database/UserLogin.cs
         public string Role { get; set; }
 
+========
+        public virtual Role Role { get; set; }
+>>>>>>>> ec93838cfc6a85fd5ba9bdc42388ef571a3abff2:BauruEmpregosBack/BauruEmpregosBack/Models/Database/User.cs
 
         [BsonElement("Activy")]
         [BsonRepresentation(BsonType.Boolean)]
         public bool Activy { get; set; } = true;
 
+<<<<<<<< HEAD:BauruEmpregosBack/BauruEmpregosBack/Models/Database/UserLogin.cs
 
+========
+>>>>>>>> ec93838cfc6a85fd5ba9bdc42388ef571a3abff2:BauruEmpregosBack/BauruEmpregosBack/Models/Database/User.cs
         [BsonElement("Token")]
         [BsonRepresentation(BsonType.String)]
         public string Token { get; set; } = null;
 
+<<<<<<<< HEAD:BauruEmpregosBack/BauruEmpregosBack/Models/Database/UserLogin.cs
 
+========
+>>>>>>>> ec93838cfc6a85fd5ba9bdc42388ef571a3abff2:BauruEmpregosBack/BauruEmpregosBack/Models/Database/User.cs
         [BsonElement("CreateDate")]
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime CreateDate { get;} = DateTime.Now;
