@@ -13,7 +13,7 @@ namespace BauruEmpregosBack.Models
 
 
         [BsonElement("UserClient")]
-        public UserClient UserClient { get; set; }
+        public User User { get; set; }
 
 
         [BsonElement("Title")]

@@ -18,26 +18,27 @@ namespace BauruEmpregosBack.Models.Database
 
 
         [BsonElement("Name")]
+        [MaxLength(50)]
         [BsonRepresentation(BsonType.String)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir um nome")]
         public string Name { get; set; }
 
 
-
+        [MaxLength(50)]
         [BsonElement("Login")]
         [BsonRepresentation(BsonType.String)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir um login")]
         public string Login { get; set; }
 
 
-
+        [MaxLength(50)]
         [BsonElement("Email")]
         [BsonRepresentation(BsonType.String)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "É obrigatório possuir um email")]
         public string Email { get; set; }
 
 
-
+        [MaxLength(30)]
         [JsonIgnore]
         [BsonRequired]
         [BsonElement("Password")]

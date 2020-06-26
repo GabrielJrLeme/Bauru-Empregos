@@ -52,7 +52,7 @@ namespace BauruEmpregosBack.Models.Database
 
         [BsonElement("Token")]
         [BsonRepresentation(BsonType.String)]
-        public string Token { get; set; } = null;
+        public string Token { get; set; }
 
 
         [BsonElement("CreateDate")]

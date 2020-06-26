@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BauruEmpregosBack.Models.Database;
 using BauruEmpregosBack.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -23,27 +20,21 @@ namespace BauruEmpregosBack.Controllers
         }
 
 
-
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> AuthenticateAsync([FromBody] UserLogin model)
         {
 
-            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model.Email) && string.IsNullOrWhiteSpace(model.Login))
+            if (!ModelState.IsValid || (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Login)) && string.IsNullOrWhiteSpace(model.Password))
                 return BadRequest("Modelo invalido");
 
             if (!await _auth.IsValidLoginAsync(model))
-                return NotFound("Dados invalidos");
+                return NotFound("Este usuario não existe");
 
-            var token = await _auth.AddToken(model);
+            model.Token = _auth.AddToken(model);
 
-
-
-            return Ok();
+            return Created("Usuario Logado", model);
         }
-
-
 
     }
 }

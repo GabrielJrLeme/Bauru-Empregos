@@ -1,4 +1,4 @@
-using BauruEmpregosBack.Authenticate;
+using BauruEmpregosBack.Authentication;
 using BauruEmpregosBack.Data;
 using BauruEmpregosBack.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,7 +34,7 @@ namespace BauruEmpregosBack
                 sp.GetRequiredService<IOptions<StoreDatabaseSettings>>().Value);
 
 
-            var key = Encoding.ASCII.GetBytes(Settings.Secret);
+            var key = Encoding.ASCII.GetBytes(AutenticationTokenHandler.Secret);
 
             services.AddAuthentication(x =>
             {
@@ -58,7 +58,6 @@ namespace BauruEmpregosBack
             services.AddMvc();
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
-            services.AddSingleton<UserService>();
             services.AddSingleton<AuthService>();
         }
 
